@@ -1,0 +1,14 @@
+#!/bin/bash
+
+SERVERS=("8.8.8.8" "1.1.1.1" "192.168.1.100" "10.0.0.1")
+LOG_FILE="/tmp/network_status.log"
+
+touch "$LOG_FILE"
+
+for ip in "${SERVERS[@]}"; do
+    if ping -c 1 -W 1 "$ip" > /dev/null 2>&1; then
+        echo "$(date '+%Y-%m-%d %H:%M:%S') - $ip - OK" >> "$LOG_FILE"
+    else
+        echo "$(date '+%Y-%m-%d %H:%M:%S') - $ip - OFFLINE" >> "$LOG_FILE"
+    fi
+done
